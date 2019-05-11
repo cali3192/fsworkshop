@@ -6,7 +6,7 @@
 //   completed: Boolean
 // });
 
-const mysql = require("mySql");
+const mysql = require("mysql");
 
 const db = mysql.createConnection({
   user: "root",
@@ -16,5 +16,47 @@ const db = mysql.createConnection({
 
 db.connect(err => {
   if (err) throw err;
-  else console.log("connected to the mysql database, YAS YAS YAS");
+  else console.log("connected to MySQL!");
+});
+
+// schema is here
+db.query(
+  `
+  use hyrnyc22
+  create table if not exists todos (
+    id integer auto_increment,
+    description varchar(255) null,
+    completed bool default false,
+    primary key(id)
+  )`,
+  err => {
+    if (err) console.log(err);
+    else console.log("`todos` table created!");
+  }
+);
+
+// Express server stuff
+
+const express = require("express");
+const parser = require("body-parser");
+
+app.use(express.static(__dirname));
+app.use(parser.json());
+
+// routes
+app.get("/todos", (req, res) => {
+  // get info from db
+  // needs a cb because it might takea while toload
+  db.query(`SELECT * FROM todos`, (err, data) => {
+    if (err) res.sendStatus(500);
+    else res.send(data);
+  });
+});
+app.post("/todos", (req, res) => {
+  //
+});
+
+const app = express();
+app.listen(3000, () => {
+  console.log(`she is connected on port ${port}!!!`);
 });
