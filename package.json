@@ -1,0 +1,25 @@
+{
+  "name": "fullstackworkshop",
+  "version": "1.0.0",
+  "description": "full stack workshop with joe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cali3192/fsworkshop.git"
+  },
+  "author": "Cali Tabilas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cali3192/fsworkshop/issues"
+  },
+  "homepage": "https://github.com/cali3192/fsworkshop#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.7",
+    "nodemon": "^1.19.0"
+  }
+}
