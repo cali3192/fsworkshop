@@ -49,11 +49,12 @@ app.get("/todos", (req, res) => {
   // needs a cb because it might takea while toload
   db.query(`SELECT * FROM todos`, (err, data) => {
     if (err) res.sendStatus(500);
-    else res.send(data);
+    else res.sendStatus(201);
   });
 });
 app.post("/todos", (req, res) => {
-  //
+  const { description } = req.body;
+  db.query(`INSERT INTO todos (description) values (?)`[description]);
 });
 
 const app = express();
