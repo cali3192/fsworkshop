@@ -1,9 +1,9 @@
-const router = require("express");
-const { getTodos, postTodos } = require("./controller.js");
+const router = require("express").Router();
+const { getTodos, postTodos } = require("./controller");
 
 router
   .route("/")
-  .get()
-  .post();
+  .get(getTodos)
+  .post(postTodos);
 
 module.exports = router;

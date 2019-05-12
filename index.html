@@ -8,5 +8,77 @@
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
-  <body></body>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            tasks: []
+          };
+          this.getTasks = this.getTasks.bind(this);
+        }
+
+        componentDidMount() {
+          this.getTasks();
+        }
+
+        getTasks() {
+          axios.get("/todos").then(({ data }) => {
+            this.setState({ tasks: data });
+          });
+        }
+
+        render() {
+          return (
+            <div>
+              <TaskForm afterSubmit={this.getTasks} />
+              <ul>
+                {this.state.tasks.map(task => {
+                  return <li key={task.id}> {task.description} </li>;
+                })}
+              </ul>
+            </div>
+          );
+        }
+      }
+
+      class TaskForm extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            userInput: ""
+          };
+        }
+
+        render() {
+          return (
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                axios
+                  .post("/todos", {
+                    description: this.state.userInput
+                  })
+                  .then(this.props.afterSubmit);
+              }}
+            >
+              <input
+                type="text"
+                value={this.state.userInput}
+                onChange={e => {
+                  this.setState({
+                    userInput: e.target.value
+                  });
+                }}
+              />
+            </form>
+          );
+        }
+      }
+
+      ReactDom.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
 </html>

@@ -19,11 +19,8 @@ db.connect(err => {
   else console.log("connected to MySQL!");
 });
 
-// schema is here
 db.query(
-  `
-  use hyrnyc22
-  create table if not exists todos (
+  `create table if not exists todos (
     id integer auto_increment,
     description varchar(255) null,
     completed bool default false,
@@ -34,3 +31,5 @@ db.query(
     else console.log("`todos` table created!");
   }
 );
+
+module.exports = db;
